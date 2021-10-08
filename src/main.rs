@@ -30,7 +30,9 @@ fn main() {
     match options {
         Ok(args) => {
             if args.show_version {
-                println!("0.1.0");
+                let version = env!("CARGO_PKG_VERSION");
+                println!("{}", version);
+                std::process::exit(0);
             }
 
             if args.show_help || args.search_term.is_none() {
