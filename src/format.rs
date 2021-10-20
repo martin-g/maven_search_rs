@@ -22,41 +22,41 @@ fn maven(results: Vec<Doc>) -> () {
       <artifactId>{}</artifactId>
       <version>{}</version>
     </dependency>
-    "#, doc.g, doc.a, doc.v)
+    "#, doc.g, doc.a, doc.latestVersion)
     ).for_each(|dep| println!("{}", dep))
 }
 
 fn gradle(results: Vec<Doc>) -> () {
     results.iter().map(|doc| format!(r#"
     implementation '{}:{}:{}'
-    "#, doc.g, doc.a, doc.v)
+    "#, doc.g, doc.a, doc.latestVersion)
     ).for_each(|dep| println!("{}", dep))
 }
 
 fn gradle_kts(results: Vec<Doc>) -> () {
     results.iter().map(|doc| format!(r#"
     implementation("{}:{}:{}")
-    "#, doc.g, doc.a, doc.v)
+    "#, doc.g, doc.a, doc.latestVersion)
     ).for_each(|dep| println!("{}", dep))
 }
 
 fn sbt(results: Vec<Doc>) -> () {
     results.iter().map(|doc| format!(r#"
     libraryDependencies += "{}" % "{}" % "{}"
-    "#, doc.g, doc.a, doc.v)
+    "#, doc.g, doc.a, doc.latestVersion)
     ).for_each(|dep| println!("{}", dep))
 }
 
 fn lein(results: Vec<Doc>) -> () {
     results.iter().map(|doc| format!(r#"
     [{}/{} "{}"]
-    "#, doc.g, doc.a, doc.v)
+    "#, doc.g, doc.a, doc.latestVersion)
     ).for_each(|dep| println!("{}", dep))
 }
 
 fn ivy(results: Vec<Doc>) -> () {
     results.iter().map(|doc| format!(r#"
     <dependency org="{}" name="{}" rev="{}" />
-    "#, doc.g, doc.a, doc.v)
+    "#, doc.g, doc.a, doc.latestVersion)
     ).for_each(|dep| println!("{}", dep))
 }

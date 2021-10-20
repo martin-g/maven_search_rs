@@ -78,11 +78,12 @@ struct SearchResult {
 }
 
 #[derive(Debug, Deserialize)]
+#[allow(non_snake_case)]
 pub struct Doc {
     pub id: String,
     pub g: String,
     pub a: String,
-    pub v: String,
+    pub latestVersion: String,
 }
 
 #[derive(Debug, Deserialize)]
