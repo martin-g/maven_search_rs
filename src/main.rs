@@ -3,7 +3,10 @@
 mod args;
 mod http;
 mod types;
+mod format;
+
 use crate::args::get_args;
+use crate::format::format;
 use crate::http::search;
 use crate::types::MavenCoordinate;
 
@@ -41,8 +44,14 @@ fn main() {
             if let Some(query) = args.search_term {
                 let coordinate = MavenCoordinate::new(query.clone());
 
-                let results = search(&coordinate);
-                println!("Results: {:?}", results)
+                match search(&coordinate) {
+                    Ok(results) => {
+                        format(results, args.format)
+                    }
+                    Err(err) => {
+                        println!("Error: {:?}", err)
+                    }
+                }
             }
         }
         Err(err) => {

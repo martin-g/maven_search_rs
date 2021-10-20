@@ -79,10 +79,10 @@ struct SearchResult {
 
 #[derive(Debug, Deserialize)]
 pub struct Doc {
-    id: String,
-    g: String,
-    a: String,
-    v: String,
+    pub id: String,
+    pub g: String,
+    pub a: String,
+    pub v: String,
 }
 
 #[derive(Debug, Deserialize)]
