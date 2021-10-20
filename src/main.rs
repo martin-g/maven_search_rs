@@ -23,8 +23,7 @@ Options:
 
 fn main() {
     let args: Vec<_> = std::env::args().skip(1).collect();
-    use getargs::Options;
-    let opts = Options::new(&args);
+    let opts = getargs::Options::new(&args);
     let options = get_args(&opts);
 
     match options {
@@ -41,6 +40,7 @@ fn main() {
 
             if let Some(query) = args.search_term {
                 let coordinate = MavenCoordinate::new(query.clone());
+
                 let results = search(&coordinate);
                 println!("Results: {:?}", results)
             }

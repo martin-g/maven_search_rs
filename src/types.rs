@@ -54,11 +54,20 @@ pub struct MavenCoordinate {
 }
 
 impl MavenCoordinate {
-    pub fn new(artifact_id: String) -> MavenCoordinate {
-        MavenCoordinate {
-            group_id: "".to_string(),
-            artifact_id,
-            version: "".to_string(),
+    pub fn new(gav: String) -> MavenCoordinate {
+        let gav_parts: Vec<&str> = gav.split(':').collect();
+        if gav_parts.len() == 2 {
+            MavenCoordinate {
+                group_id: gav_parts[0].to_string(),
+                artifact_id: gav_parts[1].to_string(),
+                version: "".to_string(),
+            }
+        } else {
+            MavenCoordinate {
+                group_id: "".to_string(),
+                artifact_id: gav,
+                version: "".to_string(),
+            }
         }
     }
 }

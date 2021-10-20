@@ -1,18 +1,19 @@
 use crate::types::{Doc, HttpResponse, MavenCoordinate, MavenResult};
 
 pub fn search<'a>(coordinate: &MavenCoordinate) -> MavenResult<'a, Vec<Doc>> {
+    let group_id = coordinate.group_id.as_str();
+    let group_id_param = if !group_id.is_empty() {
+        format!("{}{}", "g:", group_id)
+    } else {
+        "".to_string()
+    };
     let url = format!(
-        "https://search.maven.org/solrsearch/select?rows=2&q=a:{}&core=gav",
-        coordinate.artifact_id
+        "https://search.maven.org/solrsearch/select?rows=2&q={}&a:{}&core=gav",
+        group_id_param,
+        coordinate.artifact_id,
     );
 
-    let resp = reqwest::blocking::get(url)?.text()?;
+    let resp: HttpResponse = reqwest::blocking::get(url)?.json()?;
 
-    get_docs(resp)
-}
-
-fn get_docs<'a>(response: String) -> MavenResult<'a, Vec<Doc>> {
-    let v: HttpResponse = serde_json::from_str(response.as_str())?;
-
-    Ok(v.response.docs)
+    Ok(resp.response.docs)
 }
