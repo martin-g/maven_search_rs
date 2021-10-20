@@ -7,9 +7,9 @@ pub fn format(results: Vec<Doc>, fmt: &str) -> () {
         "sbt" => { sbt(results) }
         "lein" => { lein(results) }
         "ivy" => { ivy(results) }
-        "maven" => { lein(results) }
+        "maven" => { maven(results) }
         unknown => {
-            println!("WARN: Unknown format: {}. Will print in Maven XML format", unknown);
+            warn!("Unknown format: '{}'. Will print in Maven XML format", unknown);
             maven(results)
         }
     }

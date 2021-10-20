@@ -5,6 +5,9 @@ mod http;
 mod types;
 mod format;
 
+#[macro_use]
+extern crate log;
+
 use crate::args::get_args;
 use crate::format::format;
 use crate::http::search;
@@ -25,6 +28,8 @@ Options:
 "#;
 
 fn main() {
+    env_logger::init();
+
     let args: Vec<_> = std::env::args().skip(1).collect();
     let opts = getargs::Options::new(&args);
     let options = get_args(&opts);
@@ -49,7 +54,7 @@ fn main() {
                         format(results, args.format)
                     }
                     Err(err) => {
-                        println!("Error: {:?}", err)
+                        error!("{:?}", err)
                     }
                 }
             }
