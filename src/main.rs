@@ -11,18 +11,18 @@ use crate::http::search;
 use crate::types::MavenCoordinate;
 
 static HELP: &str = r#"
-maven-search [args] <query-string>
+maven-search [options] search-term
 
-search for Maven dependency
+Search for Maven dependency
 
 Positionals:
-  query-string  the dependency you search for                                                                        [string]
+  search-term  The dependency you search for. E.g. "wicket-core" or "org.apache.wicket:wicket-core"                  [string]
 
 Options:
   --version     Show version number                                                                                  [boolean]
-  --format, -f  Define in which format to print dependency. (gradle, gradlekts, gradlegroovy, maven, sbt)            [string] [default: "maven"]
+  --format, -f  Define in which format to print dependency. (maven, gradle, gradlekts, lein, ivy, sbt)               [string] [default: "maven"]
   --help, -h    Show help                                                                                            [boolean]
-        "#;
+"#;
 
 fn main() {
     let args: Vec<_> = std::env::args().skip(1).collect();
