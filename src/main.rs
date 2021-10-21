@@ -1,9 +1,9 @@
 // use dialoguer::{theme::ColorfulTheme, Confirm};
 
 mod args;
+mod format;
 mod http;
 mod types;
-mod format;
 
 #[macro_use]
 extern crate log;
@@ -47,9 +47,7 @@ fn main() {
 
             if let Some(query) = args.search_term {
                 match search(query) {
-                    Ok(results) => {
-                        format(results, args.format)
-                    }
+                    Ok(results) => format(results, args.format),
                     Err(err) => {
                         error!("{:?}", err)
                     }
