@@ -11,7 +11,6 @@ extern crate log;
 use crate::args::get_args;
 use crate::format::format;
 use crate::http::search;
-use crate::types::MavenCoordinate;
 
 static HELP: &str = r#"
 maven-search [options] search-term
@@ -47,9 +46,7 @@ fn main() {
             }
 
             if let Some(query) = args.search_term {
-                let coordinate = MavenCoordinate::new(query.clone());
-
-                match search(&coordinate) {
+                match search(query) {
                     Ok(results) => {
                         format(results, args.format)
                     }

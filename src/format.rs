@@ -15,6 +15,14 @@ pub fn format(results: Vec<Doc>, fmt: &str) -> () {
     }
 }
 
+fn version(doc: &Doc) -> &str {
+    if doc.v.is_empty() {
+        doc.latestVersion.as_str()
+    } else {
+        doc.v.as_str()
+    }
+}
+
 fn maven(results: Vec<Doc>) -> () {
     results.iter().map(|doc| format!(r#"
     <dependency>
@@ -22,41 +30,41 @@ fn maven(results: Vec<Doc>) -> () {
       <artifactId>{}</artifactId>
       <version>{}</version>
     </dependency>
-    "#, doc.g, doc.a, doc.latestVersion)
+    "#, doc.g, doc.a, version(doc))
     ).for_each(|dep| println!("{}", dep))
 }
 
 fn gradle(results: Vec<Doc>) -> () {
     results.iter().map(|doc| format!(r#"
     implementation '{}:{}:{}'
-    "#, doc.g, doc.a, doc.latestVersion)
+    "#, doc.g, doc.a, version(doc))
     ).for_each(|dep| println!("{}", dep))
 }
 
 fn gradle_kts(results: Vec<Doc>) -> () {
     results.iter().map(|doc| format!(r#"
     implementation("{}:{}:{}")
-    "#, doc.g, doc.a, doc.latestVersion)
+    "#, doc.g, doc.a, version(doc))
     ).for_each(|dep| println!("{}", dep))
 }
 
 fn sbt(results: Vec<Doc>) -> () {
     results.iter().map(|doc| format!(r#"
     libraryDependencies += "{}" % "{}" % "{}"
-    "#, doc.g, doc.a, doc.latestVersion)
+    "#, doc.g, doc.a, version(doc))
     ).for_each(|dep| println!("{}", dep))
 }
 
 fn lein(results: Vec<Doc>) -> () {
     results.iter().map(|doc| format!(r#"
     [{}/{} "{}"]
-    "#, doc.g, doc.a, doc.latestVersion)
+    "#, doc.g, doc.a, version(doc))
     ).for_each(|dep| println!("{}", dep))
 }
 
 fn ivy(results: Vec<Doc>) -> () {
     results.iter().map(|doc| format!(r#"
     <dependency org="{}" name="{}" rev="{}" />
-    "#, doc.g, doc.a, doc.latestVersion)
+    "#, doc.g, doc.a, version(doc))
     ).for_each(|dep| println!("{}", dep))
 }

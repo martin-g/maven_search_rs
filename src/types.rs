@@ -46,44 +46,16 @@ impl<'a> Default for MavenSearchArgs<'a> {
     }
 }
 
-#[derive(Debug)]
-pub struct MavenCoordinate {
-    pub group_id: String,
-    pub artifact_id: String,
-    pub version: String,
-}
-
-impl MavenCoordinate {
-    pub fn new(gav: String) -> MavenCoordinate {
-        let gav_parts: Vec<&str> = gav.split(':').collect();
-        if gav_parts.len() == 2 {
-            MavenCoordinate {
-                group_id: gav_parts[0].to_string(),
-                artifact_id: gav_parts[1].to_string(),
-                version: "".to_string(),
-            }
-        } else {
-            MavenCoordinate {
-                group_id: "".to_string(),
-                artifact_id: gav,
-                version: "".to_string(),
-            }
-        }
-    }
-}
-
-#[derive(Debug)]
-struct SearchResult {
-    pub coordinates: Vec<MavenCoordinate>,
-}
-
 #[derive(Debug, Deserialize)]
 #[allow(non_snake_case)]
 pub struct Doc {
     pub id: String,
     pub g: String,
     pub a: String,
+    #[serde(default)]
     pub latestVersion: String,
+    #[serde(default)]
+    pub v: String,
 }
 
 #[derive(Debug, Deserialize)]
