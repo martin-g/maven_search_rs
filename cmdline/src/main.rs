@@ -1,16 +1,15 @@
 // use dialoguer::{theme::ColorfulTheme, Confirm};
 
+extern crate maven_search_lib;
+
 mod args;
-mod format;
-mod http;
-mod types;
+use maven_search_lib::format::format;
+use maven_search_lib::http::search;
 
 #[macro_use]
 extern crate log;
 
 use crate::args::get_args;
-use crate::format::format;
-use crate::http::search;
 
 static HELP: &str = r#"
 maven-search [options] search-term

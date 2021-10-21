@@ -1,6 +1,8 @@
+extern crate maven_search_lib;
+
 use getargs::{Error, Opt, Options};
 
-use crate::types::{MavenError::Args, MavenResult, MavenSearchArgs};
+use maven_search_lib::types::{MavenError::Args, MavenResult, MavenSearchArgs};
 
 pub fn get_args<'a>(opts: &'a Options<'a, String>) -> MavenResult<'a, MavenSearchArgs<'a>> {
     let mut res = MavenSearchArgs::default();
