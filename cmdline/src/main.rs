@@ -11,17 +11,18 @@ extern crate log;
 use crate::args::get_args;
 
 static HELP: &str = r#"
-maven-search [options] search-term
+maven-search [options] query
 
 Search for Maven dependency
 
 Positionals:
-  search-term  The dependency you search for. E.g. "wicket-core" or "org.apache.wicket:wicket-core"                  [string]
+  query  The dependency you search for. E.g. "wicket-core" or "g:org.apache.wicket AND a:wicket-core"                [string]
+         The syntax is the same as at https://search.maven.org/
 
 Options:
   --version     Show version number                                                                                  [boolean]
   --format, -f  Define in which format to print dependency. (maven, gradle, gradlekts, lein, ivy, sbt)               [string] [default: "maven"]
-  --help, -h    Show help                                                                                            [boolean]
+  --help, -h    Show this help                                                                                       [boolean]
 "#;
 
 fn main() -> std::io::Result<()> {
@@ -46,7 +47,7 @@ fn main() -> std::io::Result<()> {
             let query: String = match args.search_term {
                 Some(term) => term.to_owned(),
                 None => Input::<String>::new()
-                    .with_prompt("Please enter the Maven query: ")
+                    .with_prompt("Please enter the Maven query ")
                     .interact_text()?,
             };
 
