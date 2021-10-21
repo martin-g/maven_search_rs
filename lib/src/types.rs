@@ -40,7 +40,7 @@ impl<'a> Default for MavenSearchArgs<'a> {
         MavenSearchArgs {
             show_version: false,
             show_help: false,
-            format: "maven",
+            format: "",
             search_term: None,
         }
     }

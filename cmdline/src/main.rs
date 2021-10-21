@@ -1,8 +1,7 @@
-// use dialoguer::{theme::ColorfulTheme, Confirm};
-
 extern crate maven_search_lib;
 
 mod args;
+use dialoguer::{console::Term, theme::ColorfulTheme, Input, Select};
 use maven_search_lib::format::format;
 use maven_search_lib::http::search;
 
@@ -25,7 +24,7 @@ Options:
   --help, -h    Show help                                                                                            [boolean]
 "#;
 
-fn main() {
+fn main() -> std::io::Result<()> {
     env_logger::init();
 
     let args: Vec<_> = std::env::args().skip(1).collect();
@@ -40,16 +39,37 @@ fn main() {
                 std::process::exit(0);
             }
 
-            if args.show_help || args.search_term.is_none() {
+            if args.show_help {
                 println!("{}", HELP);
             }
 
-            if let Some(query) = args.search_term {
-                match search(query) {
-                    Ok(results) => format(results, args.format),
-                    Err(err) => {
-                        error!("{:?}", err)
+            let query: String = match args.search_term {
+                Some(term) => term.to_owned(),
+                None => Input::<String>::new()
+                    .with_prompt("Please enter the Maven query: ")
+                    .interact_text()?,
+            };
+
+            let output_format = match args.format {
+                f if f.is_empty() => {
+                    let items = vec!["maven", "gradle", "gradlekts", "ivy", "lein", "sbt"];
+                    let selection = Select::with_theme(&ColorfulTheme::default())
+                        .items(&items)
+                        .default(0)
+                        .interact_on_opt(&Term::stderr())?;
+
+                    match selection {
+                        Some(index) => items[index],
+                        None => panic!("User did not select anything"),
                     }
+                }
+                f => f,
+            };
+
+            match search(query.as_str()) {
+                Ok(results) => format(results, output_format),
+                Err(err) => {
+                    error!("{:?}", err)
                 }
             }
         }
@@ -61,71 +81,5 @@ fn main() {
         }
     }
 
-    /*
-    if Confirm::with_theme(&ColorfulTheme::default())
-        .with_prompt("Do you want to continue?")
-        .interact()
-        .unwrap()
-    {
-        println!("Looks like you want to continue");
-    } else {
-        println!("nevermind then :(");
-    }
-
-    if Confirm::with_theme(&ColorfulTheme::default())
-        .with_prompt("Do you really want to continue?")
-        .default(true)
-        .interact()
-        .unwrap()
-    {
-        println!("Looks like you want to continue");
-    } else {
-        println!("nevermind then :(");
-    }
-
-    if Confirm::with_theme(&ColorfulTheme::default())
-        .with_prompt("Do you really really want to continue?")
-        .default(true)
-        .show_default(false)
-        .wait_for_newline(true)
-        .interact()
-        .unwrap()
-    {
-        println!("Looks like you want to continue");
-    } else {
-        println!("nevermind then :(");
-    }
-
-    if Confirm::with_theme(&ColorfulTheme::default())
-        .with_prompt("Do you really really really want to continue?")
-        .wait_for_newline(true)
-        .interact()
-        .unwrap()
-    {
-        println!("Looks like you want to continue");
-    } else {
-        println!("nevermind then :(");
-    }
-
-    match Confirm::with_theme(&ColorfulTheme::default())
-        .with_prompt("Do you really really really really want to continue?")
-        .interact_opt()
-        .unwrap()
-    {
-        Some(true) => println!("Looks like you want to continue"),
-        Some(false) => println!("nevermind then :("),
-        None => println!("Ok, we can start over later"),
-    }
-
-    match Confirm::with_theme(&ColorfulTheme::default())
-        .with_prompt("Do you really really really really really want to continue?")
-        .default(true)
-        .wait_for_newline(true)
-        .interact_opt()
-        .unwrap()
-    {
-        Some(true) => println!("Looks like you want to continue"),
-        Some(false) => println!("nevermind then :("),
-        None => println!("Ok, we can start over later"),
-    } */
+    Ok(())
 }
