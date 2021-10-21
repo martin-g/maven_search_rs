@@ -458,7 +458,7 @@ dependencies = [
 
 [[package]]
 name = "maven_search_cmdline"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "dialoguer",
  "env_logger",

@@ -1,6 +1,6 @@
 [package]
 name = "maven_search_cmdline"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 authors = ["Martin Grigorov <mgrigorov@apache.org>"]
 description = "A command libe utility for searching in Maven Central and formatting to Maven/Gradle/Gradle.kts/Sbt/Ivy/Lein"
