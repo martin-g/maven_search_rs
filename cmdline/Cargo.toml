@@ -17,3 +17,7 @@ getargs = "0.4.1"
 log = "0.4.14"
 #maven-search-lib = { path = "../lib" }
 maven-search-lib = "0.1.0"
+
+[[bin]]
+name = "maven-search"
+path = "src/main.rs"
