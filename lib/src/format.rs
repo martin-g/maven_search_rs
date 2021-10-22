@@ -26,102 +26,91 @@ fn version(doc: &Doc) -> &str {
     }
 }
 
+fn transform<F>(results: Vec<Doc>, func: F) -> Vec<String>
+where
+    F: Fn(&Doc) -> String,
+{
+    results.iter().map(|doc| func(doc)).collect()
+}
+
 fn maven(results: Vec<Doc>) -> Vec<String> {
-    results
-        .iter()
-        .map(|doc| {
-            format!(
-                r#"
+    transform(results, |doc| {
+        format!(
+            r#"
     <dependency>
       <groupId>{}</groupId>
       <artifactId>{}</artifactId>
       <version>{}</version>
     </dependency>
     "#,
-                doc.g,
-                doc.a,
-                version(doc)
-            )
-        })
-        .collect()
+            doc.g,
+            doc.a,
+            version(doc)
+        )
+    })
 }
 
 fn gradle(results: Vec<Doc>) -> Vec<String> {
-    results
-        .iter()
-        .map(|doc| {
-            format!(
-                r#"
+    transform(results, |doc| {
+        format!(
+            r#"
     implementation '{}:{}:{}'
     "#,
-                doc.g,
-                doc.a,
-                version(doc)
-            )
-        })
-        .collect()
+            doc.g,
+            doc.a,
+            version(doc)
+        )
+    })
 }
 
 fn gradle_kts(results: Vec<Doc>) -> Vec<String> {
-    results
-        .iter()
-        .map(|doc| {
-            format!(
-                r#"
+    transform(results, |doc| {
+        format!(
+            r#"
     implementation("{}:{}:{}")
     "#,
-                doc.g,
-                doc.a,
-                version(doc)
-            )
-        })
-        .collect()
+            doc.g,
+            doc.a,
+            version(doc)
+        )
+    })
 }
 
 fn sbt(results: Vec<Doc>) -> Vec<String> {
-    results
-        .iter()
-        .map(|doc| {
-            format!(
-                r#"
+    transform(results, |doc| {
+        format!(
+            r#"
     libraryDependencies += "{}" % "{}" % "{}"
     "#,
-                doc.g,
-                doc.a,
-                version(doc)
-            )
-        })
-        .collect()
+            doc.g,
+            doc.a,
+            version(doc)
+        )
+    })
 }
 
 fn lein(results: Vec<Doc>) -> Vec<String> {
-    results
-        .iter()
-        .map(|doc| {
-            format!(
-                r#"
+    transform(results, |doc| {
+        format!(
+            r#"
     [{}/{} "{}"]
     "#,
-                doc.g,
-                doc.a,
-                version(doc)
-            )
-        })
-        .collect()
+            doc.g,
+            doc.a,
+            version(doc)
+        )
+    })
 }
 
 fn ivy(results: Vec<Doc>) -> Vec<String> {
-    results
-        .iter()
-        .map(|doc| {
-            format!(
-                r#"
+    transform(results, |doc| {
+        format!(
+            r#"
     <dependency org="{}" name="{}" rev="{}" />
     "#,
-                doc.g,
-                doc.a,
-                version(doc)
-            )
-        })
-        .collect()
+            doc.g,
+            doc.a,
+            version(doc)
+        )
+    })
 }
