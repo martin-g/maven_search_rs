@@ -1,7 +1,7 @@
 use crate::types::Doc;
 
-pub fn format(results: Vec<Doc>, fmt: &str) {
-    match fmt {
+pub fn format(results: Vec<Doc>, output_format: &str) -> Vec<String> {
+    match output_format {
         "gradle" => gradle(results),
         "gradle.kts" | "gradle_kts" | "gradlekts" => gradle_kts(results),
         "sbt" => sbt(results),
@@ -26,7 +26,7 @@ fn version(doc: &Doc) -> &str {
     }
 }
 
-fn maven(results: Vec<Doc>) {
+fn maven(results: Vec<Doc>) -> Vec<String> {
     results
         .iter()
         .map(|doc| {
@@ -43,10 +43,10 @@ fn maven(results: Vec<Doc>) {
                 version(doc)
             )
         })
-        .for_each(|dep| println!("{}", dep))
+        .collect()
 }
 
-fn gradle(results: Vec<Doc>) {
+fn gradle(results: Vec<Doc>) -> Vec<String> {
     results
         .iter()
         .map(|doc| {
@@ -59,10 +59,10 @@ fn gradle(results: Vec<Doc>) {
                 version(doc)
             )
         })
-        .for_each(|dep| println!("{}", dep))
+        .collect()
 }
 
-fn gradle_kts(results: Vec<Doc>) {
+fn gradle_kts(results: Vec<Doc>) -> Vec<String> {
     results
         .iter()
         .map(|doc| {
@@ -75,10 +75,10 @@ fn gradle_kts(results: Vec<Doc>) {
                 version(doc)
             )
         })
-        .for_each(|dep| println!("{}", dep))
+        .collect()
 }
 
-fn sbt(results: Vec<Doc>) {
+fn sbt(results: Vec<Doc>) -> Vec<String> {
     results
         .iter()
         .map(|doc| {
@@ -91,10 +91,10 @@ fn sbt(results: Vec<Doc>) {
                 version(doc)
             )
         })
-        .for_each(|dep| println!("{}", dep))
+        .collect()
 }
 
-fn lein(results: Vec<Doc>) {
+fn lein(results: Vec<Doc>) -> Vec<String> {
     results
         .iter()
         .map(|doc| {
@@ -107,10 +107,10 @@ fn lein(results: Vec<Doc>) {
                 version(doc)
             )
         })
-        .for_each(|dep| println!("{}", dep))
+        .collect()
 }
 
-fn ivy(results: Vec<Doc>) {
+fn ivy(results: Vec<Doc>) -> Vec<String> {
     results
         .iter()
         .map(|doc| {
@@ -123,5 +123,5 @@ fn ivy(results: Vec<Doc>) {
                 version(doc)
             )
         })
-        .for_each(|dep| println!("{}", dep))
+        .collect()
 }

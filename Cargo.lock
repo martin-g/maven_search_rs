@@ -443,20 +443,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "maven-search-lib"
-version = "0.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "41388adc7372b0c8885f995b1de6804020af6b84ebc2c2fbbeb4bc6073664b11"
-dependencies = [
- "getargs",
- "log",
- "reqwest",
- "serde",
- "serde_json",
- "tokio",
-]
-
-[[package]]
 name = "maven_search_cmdline"
 version = "0.1.1"
 dependencies = [
@@ -464,7 +450,7 @@ dependencies = [
  "env_logger",
  "getargs",
  "log",
- "maven-search-lib 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "maven-search-lib",
 ]
 
 [[package]]

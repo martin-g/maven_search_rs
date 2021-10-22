@@ -68,7 +68,9 @@ fn main() -> std::io::Result<()> {
             };
 
             match search(query.as_str()) {
-                Ok(results) => format(results, output_format),
+                Ok(results) => format(results, output_format)
+                    .iter()
+                    .for_each(|dep| println!("{}", dep)),
                 Err(err) => {
                     error!("{:?}", err)
                 }
