@@ -45,4 +45,4 @@ Options:
 
 starts an interactive session where the user has to type the query and select the output format.
 
-[![asciicast](https://asciinema.org/a/CgJHxNDPycmEDG4FZCE0hwSDy.svg)](https://asciinema.org/a/CgJHxNDPycmEDG4FZCE0hwSDy)
+[![asciicast](https://asciinema.org/a/PeId77lNYRnUZj8pAjTZBgDmi.svg)](https://asciinema.org/a/PeId77lNYRnUZj8pAjTZBgDmi)
