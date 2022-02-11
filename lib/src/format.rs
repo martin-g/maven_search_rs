@@ -1,7 +1,10 @@
 use crate::types::Doc;
 
 pub fn format(results: Vec<Doc>, output_format: &str) -> Vec<String> {
-    debug!("Going to format the following results with format '{:?}':\n{:?}", output_format, &results);
+    debug!(
+        "Going to format the following results with format '{:?}':\n{:?}",
+        output_format, &results
+    );
 
     match output_format {
         "gradle" => gradle(results),
