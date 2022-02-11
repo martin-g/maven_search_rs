@@ -14,7 +14,7 @@ Sample output:
 <dependency>
     <groupId>org.apache.wicket</groupId>
     <artifactId>wicket-core</artifactId>
-    <version>9.5.0</version>
+    <version>9.8.0</version>
 </dependency>
 ```
 
@@ -30,13 +30,14 @@ maven-search [options] query
 Search for Maven dependency
 
 Positionals:
-query  The dependency you search for. E.g. "wicket-core" or "g:org.apache.wicket AND a:wicket-core"                [string]
-The syntax is the same as at https://search.maven.org/
+  query  The dependency you search for. E.g. "wicket-core" or "g:org.apache.wicket AND a:wicket-core"                [string]
+         The syntax is the same as at https://search.maven.org/
 
 Options:
---version     Show version number                                                                                  [boolean]
---format, -f  Define in which format to print dependency. (maven, gradle, gradlekts, lein, ivy, sbt)               [string] [default: "maven"]
---help, -h    Show this help                                                                                       [boolean]
+  --version                 Show version number and exit
+  --format, -f [string]     Define in which format to print dependency. (maven, gradle, gradlekts, lein, ivy, sbt). Default: "maven"
+  --check-for-update, -u    Checks whether there is a new version of this tool available and exit
+  --help, -h                Show this help and exit
 ```
 
 ## Interactive
@@ -45,4 +46,4 @@ Options:
 
 starts an interactive session where the user has to type the query and select the output format.
 
-[![asciicast](https://asciinema.org/a/PeId77lNYRnUZj8pAjTZBgDmi.svg)](https://asciinema.org/a/PeId77lNYRnUZj8pAjTZBgDmi)
+[![asciicast](https://asciinema.org/a/447171.svg)](https://asciinema.org/a/447171)
