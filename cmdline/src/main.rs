@@ -95,13 +95,13 @@ fn main() -> std::io::Result<()> {
 }
 
 fn check_for_new_version() {
-    use update_informer::{registry::Crates, Check, UpdateInformer};
     use std::time::Duration;
+    use update_informer::{registry::Crates, Check, UpdateInformer};
 
     let name = env!("CARGO_PKG_NAME");
     let version = env!("CARGO_PKG_VERSION");
 
-    let informer = UpdateInformer::new(Crates, name, version, Duration::from_secs(1 ));
+    let informer = UpdateInformer::new(Crates, name, version, Duration::from_secs(1));
     if let Ok(Some(latest_version)) = informer.check_version() {
         println!("A new version of this tool is available. Current {}, latest: {}. Please run 'cargo install {}' to update!", version, latest_version, name);
     }
