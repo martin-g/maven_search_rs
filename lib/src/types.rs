@@ -3,8 +3,9 @@ use serde::Deserialize;
 #[derive(Debug)]
 pub enum MavenError<'a> {
     Args(getargs::Error<'a>),
-    Http(reqwest::Error),
+    Http(ureq::Error),
     Json(serde_json::Error),
+    IO(std::io::Error),
 }
 
 impl<'a> From<getargs::Error<'a>> for MavenError<'a> {
@@ -13,8 +14,8 @@ impl<'a> From<getargs::Error<'a>> for MavenError<'a> {
     }
 }
 
-impl<'a> From<reqwest::Error> for MavenError<'a> {
-    fn from(err: reqwest::Error) -> Self {
+impl<'a> From<ureq::Error> for MavenError<'a> {
+    fn from(err: ureq::Error) -> Self {
         MavenError::Http(err)
     }
 }
@@ -22,6 +23,12 @@ impl<'a> From<reqwest::Error> for MavenError<'a> {
 impl<'a> From<serde_json::Error> for MavenError<'a> {
     fn from(err: serde_json::Error) -> Self {
         MavenError::Json(err)
+    }
+}
+
+impl<'a> From<std::io::Error> for MavenError<'a> {
+    fn from(err: std::io::Error) -> Self {
+        MavenError::IO(err)
     }
 }
 
