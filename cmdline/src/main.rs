@@ -68,7 +68,10 @@ fn main() -> std::io::Result<()> {
 
                     match selection {
                         Some(index) => items[index],
-                        None => panic!("User did not select anything"),
+                        None => {
+                            error!("You need to select an output format. Or use '--format xyz' command line argument.");
+                            std::process::exit(3);
+                        }
                     }
                 }
                 f => f,
@@ -79,15 +82,20 @@ fn main() -> std::io::Result<()> {
                     .iter()
                     .for_each(|dep| println!("{}", dep)),
                 Err(err) => {
-                    error!("{:?}", err)
+                    error!(
+                        "An error occurred while searching for the latest version of '{}'\n\n{:?}",
+                        query, err
+                    );
+                    std::process::exit(2);
                 }
             }
         }
         Err(err) => {
-            panic!(
+            error!(
                 "An error occurred while parsing the command line arguments: {:?}",
                 err
             );
+            std::process::exit(1);
         }
     }
 
