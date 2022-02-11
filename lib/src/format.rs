@@ -35,7 +35,7 @@ fn transform<F>(results: Vec<Doc>, func: F) -> Vec<String>
 where
     F: Fn(&Doc) -> String,
 {
-    results.iter().map(|doc| func(doc)).collect()
+    results.iter().map(func).collect()
 }
 
 fn maven(results: Vec<Doc>) -> Vec<String> {

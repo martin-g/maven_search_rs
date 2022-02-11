@@ -27,25 +27,13 @@ impl<'a> From<serde_json::Error> for MavenError<'a> {
 
 pub type MavenResult<'a, T> = Result<T, MavenError<'a>>;
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Default)]
 pub struct MavenSearchArgs<'a> {
     pub show_version: bool,
     pub show_help: bool,
     pub format: &'a str,
     pub search_term: Option<&'a String>,
     pub check_for_update: bool,
-}
-
-impl<'a> Default for MavenSearchArgs<'a> {
-    fn default() -> Self {
-        MavenSearchArgs {
-            show_version: false,
-            show_help: false,
-            format: "",
-            search_term: None,
-            check_for_update: false,
-        }
-    }
 }
 
 #[derive(Debug, Deserialize)]
