@@ -20,9 +20,10 @@ Positionals:
          The syntax is the same as at https://search.maven.org/
 
 Options:
-  --version     Show version number                                                                                  [boolean]
-  --format, -f  Define in which format to print dependency. (maven, gradle, gradlekts, lein, ivy, sbt)               [string] [default: "maven"]
-  --help, -h    Show this help                                                                                       [boolean]
+  --version                 Show version number and exit
+  --format, -f [string]     Define in which format to print dependency. (maven, gradle, gradlekts, lein, ivy, sbt). Default: "maven"
+  --check-for-update, -u    Checks whether there is a new version of this tool available and exit
+  --help, -h                Show this help and exit
 "#;
 
 fn main() -> std::io::Result<()> {
@@ -42,6 +43,12 @@ fn main() -> std::io::Result<()> {
 
             if args.show_help {
                 println!("{}", HELP);
+                std::process::exit(0);
+            }
+
+            if args.check_for_update {
+                check_for_new_version();
+                std::process::exit(0);
             }
 
             let query: String = match args.search_term {
@@ -85,4 +92,17 @@ fn main() -> std::io::Result<()> {
     }
 
     Ok(())
+}
+
+fn check_for_new_version() {
+    use update_informer::{registry::Crates, Check, UpdateInformer};
+    use std::time::Duration;
+
+    let name = env!("CARGO_PKG_NAME");
+    let version = env!("CARGO_PKG_VERSION");
+
+    let informer = UpdateInformer::new(Crates, name, version, Duration::from_secs(1 ));
+    if let Ok(Some(latest_version)) = informer.check_version() {
+        println!("A new version of this tool is available. Current {}, latest: {}. Please run 'cargo install {}' to update!", version, latest_version, name);
+    }
 }

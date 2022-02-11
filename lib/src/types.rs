@@ -33,6 +33,7 @@ pub struct MavenSearchArgs<'a> {
     pub show_help: bool,
     pub format: &'a str,
     pub search_term: Option<&'a String>,
+    pub check_for_update: bool,
 }
 
 impl<'a> Default for MavenSearchArgs<'a> {
@@ -42,6 +43,7 @@ impl<'a> Default for MavenSearchArgs<'a> {
             show_help: false,
             format: "",
             search_term: None,
+            check_for_update: false,
         }
     }
 }
