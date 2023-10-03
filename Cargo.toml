@@ -5,3 +5,16 @@ members = [
 ]
 
 resolver = "2"
+
+[workspace.package]
+version = "0.3.0"
+description = "A library for searching in Maven Central and formatting to Maven/Gradle/Gradle.kts/Sbt/Ivy/Lein"
+authors = ["Martin Grigorov <mgrigorov@apache.org>"]
+license-file = "MIT/Apache-2.0"
+repository = "https://github.com/martin-g/maven_search_rs"
+edition = "2021"
+rust-version = "1.72.0"
+keywords = ["maven", "java", "search"]
+categories = ["command-line-utilities", "development-tools"]
+readme = "README.md"
+homepage = "https://github.com/martin-g/maven_search_rs"
