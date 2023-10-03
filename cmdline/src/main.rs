@@ -29,9 +29,10 @@ Options:
 fn main() -> std::io::Result<()> {
     env_logger::init();
 
-    let args: Vec<_> = std::env::args().skip(1).collect();
-    let opts = getargs::Options::new(&args);
-    let options = get_args(&opts);
+    let args: Vec<String> = std::env::args().skip(1).collect();
+    let mut args = args.iter().map(String::as_str);
+    let mut opts = getargs::Options::new(&mut args);
+    let options = get_args(&mut opts);
 
     match options {
         Ok(args) => {
