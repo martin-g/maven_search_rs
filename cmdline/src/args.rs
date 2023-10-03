@@ -1,21 +1,23 @@
 extern crate maven_search_lib;
 
-use getargs::{Error, Opt, Options};
+use getargs::{Arg, Options};
 
-use maven_search_lib::types::{MavenError::Args, MavenResult, MavenSearchArgs};
+use maven_search_lib::types::{MavenResult, MavenSearchArgs};
 
-pub fn get_args<'a>(opts: &'a Options<'a, String>) -> MavenResult<'a, MavenSearchArgs<'a>> {
+pub fn get_args<'a, I : Iterator<Item = &'a str>>(opts: &'a mut Options<&'a str, I>) -> MavenResult<'a, MavenSearchArgs<'a>>
+{
     let mut res = MavenSearchArgs::default();
 
-    while let Some(opt) = opts.next() {
-        match opt? {
-            Opt::Long("version") => res.show_version = true,
-            Opt::Short('u') | Opt::Long("check-for-update") => res.check_for_update = true,
-            Opt::Short('h') | Opt::Long("help") => res.show_help = true,
-            Opt::Short('f') | Opt::Long("format") => res.format = opts.value_str()?,
-            opt => return Err(Args(Error::UnknownOpt(opt))),
+    while let Some(opt) = opts.next_arg().expect("argument parsing error") {
+        match opt {
+            Arg::Long("version") => res.show_version = true,
+            Arg::Short('u') | Arg::Long("check-for-update") => res.check_for_update = true,
+            Arg::Short('h') | Arg::Long("help") => res.show_help = true,
+            Arg::Short('f') | Arg::Long("format") => res.format = opts.value().expect("format argument parsing error"),
+            Arg::Positional(search_term) => res.search_term = Some(search_term),
+            arg => panic!("Unknown option: {arg}"),
         }
     }
-    res.search_term = opts.args().first();
+
     Ok(res)
 }

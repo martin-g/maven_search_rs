@@ -2,14 +2,14 @@ use serde::Deserialize;
 
 #[derive(Debug)]
 pub enum MavenError<'a> {
-    Args(getargs::Error<'a>),
+    Args(getargs::Error<&'a str>),
     Http(ureq::Error),
     Json(serde_json::Error),
     IO(std::io::Error),
 }
 
-impl<'a> From<getargs::Error<'a>> for MavenError<'a> {
-    fn from(err: getargs::Error<'a>) -> Self {
+impl<'a> From<getargs::Error<&'a str>> for MavenError<'a> {
+    fn from(err: getargs::Error<&'a str>) -> Self {
         MavenError::Args(err)
     }
 }
@@ -39,7 +39,7 @@ pub struct MavenSearchArgs<'a> {
     pub show_version: bool,
     pub show_help: bool,
     pub format: &'a str,
-    pub search_term: Option<&'a String>,
+    pub search_term: Option<&'a str>,
     pub check_for_update: bool,
 }
 

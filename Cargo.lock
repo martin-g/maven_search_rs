@@ -313,12 +313,6 @@ dependencies = [
 
 [[package]]
 name = "getargs"
-version = "0.4.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9cfacaadcc56dafd87f2eab940162f1b41008c1752af63d1a1e29b542cb04cf1"
-
-[[package]]
-name = "getargs"
 version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "084c6b182b01dec54ff12986b9cc8859a9b0d92b074f878c382a4481a070e66e"
@@ -536,20 +530,7 @@ checksum = "a3e378b66a060d48947b590737b30a1be76706c8dd7b8ba0f2fe3989c68a853f"
 name = "maven-search-lib"
 version = "0.2.1"
 dependencies = [
- "getargs 0.5.0",
- "log",
- "serde",
- "serde_json",
- "ureq",
-]
-
-[[package]]
-name = "maven-search-lib"
-version = "0.2.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "20811e8b3b87ed9a1ebd0dd37233f811812fb63105bf7ed2ccda43f3a2eb5ed8"
-dependencies = [
- "getargs 0.4.1",
+ "getargs",
  "log",
  "serde",
  "serde_json",
@@ -562,9 +543,9 @@ version = "0.2.2"
 dependencies = [
  "dialoguer",
  "env_logger",
- "getargs 0.5.0",
+ "getargs",
  "log",
- "maven-search-lib 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "maven-search-lib",
  "update-informer",
 ]
 
