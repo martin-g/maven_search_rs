@@ -3,3 +3,5 @@ members = [
     "lib",
     "cmdline",
 ]
+
+resolver = "2"
