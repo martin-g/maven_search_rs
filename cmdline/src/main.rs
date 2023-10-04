@@ -1,9 +1,11 @@
 extern crate maven_search_lib;
 
 mod args;
+
 use dialoguer::{console::Term, theme::ColorfulTheme, Input, Select};
 use maven_search_lib::format::format;
 use maven_search_lib::http::search;
+use std::error::Error;
 
 #[macro_use]
 extern crate log;
@@ -26,7 +28,7 @@ Options:
   --help, -h                Show this help and exit
 "#;
 
-fn main() -> std::io::Result<()> {
+fn main() -> Result<(), Box<dyn Error>> {
     env_logger::init();
 
     let args: Vec<String> = std::env::args().skip(1).collect();
