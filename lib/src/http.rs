@@ -13,3 +13,19 @@ pub fn search<'a>(query: &str) -> MavenResult<'a, Vec<Doc>> {
     debug!("response:\n{:?}", &resp);
     Ok(resp.response.docs)
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::http::search;
+
+    #[test]
+    fn test_search() {
+        let docs = search("g:org.apache.wicket AND a:wicket-core").unwrap();
+        assert_eq!(docs.len(), 1);
+        let doc = &docs[0];
+        assert_eq!(doc.id, "org.apache.wicket:wicket-core");
+        assert_eq!(doc.g, "org.apache.wicket");
+        assert_eq!(doc.a, "wicket-core");
+        assert!(!doc.latestVersion.is_empty());
+    }
+}
