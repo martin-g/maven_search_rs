@@ -62,7 +62,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             };
 
             let output_format = match args.format {
-                f if f.is_empty() => {
+                "" => {
                     let items = vec!["maven", "gradle", "gradlekts", "ivy", "lein", "sbt"];
                     let selection = Select::with_theme(&ColorfulTheme::default())
                         .items(&items)
