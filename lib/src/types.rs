@@ -14,19 +14,19 @@ impl<'a> From<getargs::Error<&'a str>> for MavenError<'a> {
     }
 }
 
-impl<'a> From<ureq::Error> for MavenError<'a> {
+impl From<ureq::Error> for MavenError<'_> {
     fn from(err: ureq::Error) -> Self {
         MavenError::Http(err.to_string())
     }
 }
 
-impl<'a> From<serde_json::Error> for MavenError<'a> {
+impl From<serde_json::Error> for MavenError<'_> {
     fn from(err: serde_json::Error) -> Self {
         MavenError::Json(err)
     }
 }
 
-impl<'a> From<std::io::Error> for MavenError<'a> {
+impl From<std::io::Error> for MavenError<'_> {
     fn from(err: std::io::Error) -> Self {
         MavenError::IO(err)
     }
