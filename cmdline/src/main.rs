@@ -2,7 +2,7 @@ extern crate maven_search_lib;
 
 mod args;
 
-use dialoguer::{console::Term, theme::ColorfulTheme, Input, Select};
+use dialoguer::{Input, Select, console::Term, theme::ColorfulTheme};
 use maven_search_lib::format::format;
 use maven_search_lib::http::search;
 use std::error::Error;
@@ -72,7 +72,9 @@ fn main() -> Result<(), Box<dyn Error>> {
                     match selection {
                         Some(index) => items[index],
                         None => {
-                            error!("You need to select an output format. Or use '--format xyz' command line argument.");
+                            error!(
+                                "You need to select an output format. Or use '--format xyz' command line argument."
+                            );
                             std::process::exit(3);
                         }
                     }
@@ -106,13 +108,16 @@ fn main() -> Result<(), Box<dyn Error>> {
 }
 
 fn check_for_new_version() {
-    use update_informer::{registry, Check};
+    use update_informer::{Check, registry};
 
     let name = env!("CARGO_PKG_NAME");
     let version = env!("CARGO_PKG_VERSION");
 
     let informer = update_informer::new(registry::Crates, name, version);
     if let Ok(Some(latest_version)) = informer.check_version() {
-        println!("A new version of this tool is available. Current {}, latest: {}. Please run 'cargo install {}' to update!", version, latest_version, name);
+        println!(
+            "A new version of this tool is available. Current {}, latest: {}. Please run 'cargo install {}' to update!",
+            version, latest_version, name
+        );
     }
 }
