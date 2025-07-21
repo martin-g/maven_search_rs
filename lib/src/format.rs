@@ -14,10 +14,7 @@ pub fn format(results: Vec<Doc>, output_format: &str) -> Vec<String> {
         "ivy" => ivy(results),
         "maven" => maven(results),
         unknown => {
-            warn!(
-                "Unknown format: '{}'. Will print in Maven XML format",
-                unknown
-            );
+            warn!("Unknown format: '{unknown}'. Will print in Maven XML format");
             maven(results)
         }
     }

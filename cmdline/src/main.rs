@@ -40,12 +40,12 @@ fn main() -> Result<(), Box<dyn Error>> {
         Ok(args) => {
             if args.show_version {
                 let version = env!("CARGO_PKG_VERSION");
-                println!("{}", version);
+                println!("{version}");
                 std::process::exit(0);
             }
 
             if args.show_help {
-                println!("{}", HELP);
+                println!("{HELP}");
                 std::process::exit(0);
             }
 
@@ -85,21 +85,17 @@ fn main() -> Result<(), Box<dyn Error>> {
             match search(query.as_str()) {
                 Ok(results) => format(results, output_format)
                     .iter()
-                    .for_each(|dep| println!("{}", dep)),
+                    .for_each(|dep| println!("{dep}")),
                 Err(err) => {
                     error!(
-                        "An error occurred while searching for the latest version of '{}'\n\n{:?}",
-                        query, err
+                        "An error occurred while searching for the latest version of '{query}'\n\n{err:?}"
                     );
                     std::process::exit(2);
                 }
             }
         }
         Err(err) => {
-            error!(
-                "An error occurred while parsing the command line arguments: {:?}",
-                err
-            );
+            error!("An error occurred while parsing the command line arguments: {err:?}");
             std::process::exit(1);
         }
     }
@@ -116,8 +112,7 @@ fn check_for_new_version() {
     let informer = update_informer::new(registry::Crates, name, version);
     if let Ok(Some(latest_version)) = informer.check_version() {
         println!(
-            "A new version of this tool is available. Current {}, latest: {}. Please run 'cargo install {}' to update!",
-            version, latest_version, name
+            "A new version of this tool is available. Current {version}, latest: {latest_version}. Please run 'cargo install {name}' to update!"
         );
     }
 }
