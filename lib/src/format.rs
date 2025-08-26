@@ -12,7 +12,7 @@ pub fn format(results: Vec<Doc>, output_format: &str) -> Vec<String> {
         "sbt" => sbt(results),
         "lein" => lein(results),
         "ivy" => ivy(results),
-        "maven" => maven(results),
+        "maven" | "mvn" => maven(results),
         unknown => {
             warn!("Unknown format: '{unknown}'. Will print in Maven XML format");
             maven(results)
@@ -21,10 +21,9 @@ pub fn format(results: Vec<Doc>, output_format: &str) -> Vec<String> {
 }
 
 fn version(doc: &Doc) -> &str {
-    if doc.v.is_empty() {
-        doc.latestVersion.as_str()
-    } else {
-        doc.v.as_str()
+    match &doc.version {
+        Some(v) => v.as_str(),
+        None => doc.latestVersionInfo.version.as_str(),
     }
 }
 
@@ -45,8 +44,8 @@ fn maven(results: Vec<Doc>) -> Vec<String> {
       <version>{}</version>
     </dependency>
     "#,
-            doc.g,
-            doc.a,
+            doc.namespace,
+            doc.name,
             version(doc)
         )
     })
@@ -58,8 +57,8 @@ fn gradle(results: Vec<Doc>) -> Vec<String> {
             r#"
     implementation '{}:{}:{}'
     "#,
-            doc.g,
-            doc.a,
+            doc.namespace,
+            doc.name,
             version(doc)
         )
     })
@@ -71,8 +70,8 @@ fn gradle_kts(results: Vec<Doc>) -> Vec<String> {
             r#"
     implementation("{}:{}:{}")
     "#,
-            doc.g,
-            doc.a,
+            doc.namespace,
+            doc.name,
             version(doc)
         )
     })
@@ -84,8 +83,8 @@ fn sbt(results: Vec<Doc>) -> Vec<String> {
             r#"
     libraryDependencies += "{}" % "{}" % "{}"
     "#,
-            doc.g,
-            doc.a,
+            doc.namespace,
+            doc.name,
             version(doc)
         )
     })
@@ -97,8 +96,8 @@ fn lein(results: Vec<Doc>) -> Vec<String> {
             r#"
     [{}/{} "{}"]
     "#,
-            doc.g,
-            doc.a,
+            doc.namespace,
+            doc.name,
             version(doc)
         )
     })
@@ -110,8 +109,8 @@ fn ivy(results: Vec<Doc>) -> Vec<String> {
             r#"
     <dependency org="{}" name="{}" rev="{}" />
     "#,
-            doc.g,
-            doc.a,
+            doc.namespace,
+            doc.name,
             version(doc)
         )
     })
