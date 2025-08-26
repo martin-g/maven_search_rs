@@ -1,4 +1,5 @@
 use crate::types::{Doc, HttpResponse, MavenResult};
+use log::debug;
 
 const URL: &str = "https://central.sonatype.com/api/internal/browse/components";
 

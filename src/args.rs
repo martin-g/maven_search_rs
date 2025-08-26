@@ -1,8 +1,5 @@
-extern crate maven_search_lib;
-
+use crate::types::{MavenResult, MavenSearchArgs};
 use getargs::{Arg, Options};
-
-use maven_search_lib::types::{MavenResult, MavenSearchArgs};
 
 pub fn get_args<'a, I: Iterator<Item = &'a str>>(
     opts: &'a mut Options<&'a str, I>,

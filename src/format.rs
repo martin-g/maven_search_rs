@@ -1,4 +1,5 @@
 use crate::types::Doc;
+use log::{debug, warn};
 
 pub fn format(results: Vec<Doc>, output_format: &str) -> Vec<String> {
     debug!(

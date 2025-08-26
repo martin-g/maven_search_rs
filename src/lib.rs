@@ -1,9 +1,7 @@
+pub mod args;
 pub mod format;
 pub mod http;
 pub mod types;
-
-#[macro_use]
-extern crate log;
 
 #[cfg(test)]
 mod tests {
