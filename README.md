@@ -1,5 +1,5 @@
 # maven_search_rs
-Command line application for searching in https://search.maven.org
+Command line application for searching in https://central.sonatype.com
 
 # Usage
 
@@ -7,7 +7,7 @@ Command line application for searching in https://search.maven.org
 
     $ maven-search -f maven wicket-core
 
-The above will search for the latest version of a Maven artifact with id `wicket-core`. 
+The above will search for the latest version of a Maven artifact with id `wicket-core`.
 Sample output:
 
 ```xml
