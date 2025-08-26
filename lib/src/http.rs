@@ -1,15 +1,19 @@
 use crate::types::{Doc, HttpResponse, MavenResult};
 
+const URL: &str = "https://central.sonatype.com/api/internal/browse/components";
+
 pub fn search<'a>(query: &str) -> MavenResult<'a, Vec<Doc>> {
-    let query = urlencoding::encode(query);
-    let url = &format!("https://search.maven.org/solrsearch/select?start=0&rows=1&q={query}");
+    let request_body = format!(r#"{{"filter":[], "size": 10, "searchTerm": "{query}"}}"#);
+    debug!("Going to make a request for : {request_body}");
 
-    debug!("Going to make a request to : {url:?}");
+    let resp: HttpResponse = ureq::post(URL)
+        .header("Content-Type", "application/json")
+        .send(request_body)?
+        .body_mut()
+        .read_json()?;
 
-    let resp: HttpResponse = ureq::get(url).call()?.body_mut().read_json()?;
-
-    debug!("response:\n{resp:?}");
-    Ok(resp.response.docs)
+    debug!("response:\n{resp:#?}");
+    Ok(resp.components)
 }
 
 #[cfg(test)]
@@ -20,12 +24,12 @@ mod tests {
     fn test_search() {
         env_logger::init();
 
-        let docs = search("g:org.apache.wicket AND a:wicket-core").unwrap();
+        let docs = search("g:org.apache.wicket a:wicket-core").unwrap();
         assert_eq!(docs.len(), 1);
         let doc = &docs[0];
-        assert_eq!(doc.id, "org.apache.wicket:wicket-core");
-        assert_eq!(doc.g, "org.apache.wicket");
-        assert_eq!(doc.a, "wicket-core");
-        assert!(!doc.latestVersion.is_empty());
+        assert_eq!(doc.id, "pkg:maven/org.apache.wicket/wicket-core");
+        assert_eq!(doc.namespace, "org.apache.wicket");
+        assert_eq!(doc.name, "wicket-core");
+        assert!(!doc.latestVersionInfo.version.is_empty());
     }
 }

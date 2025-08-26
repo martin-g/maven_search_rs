@@ -44,23 +44,22 @@ pub struct MavenSearchArgs<'a> {
 }
 
 #[derive(Debug, Deserialize)]
-#[allow(non_snake_case)]
-pub struct Doc {
-    pub id: String,
-    pub g: String,
-    pub a: String,
+pub struct LatestVersionInfo {
     #[serde(default)]
-    pub latestVersion: String,
-    #[serde(default)]
-    pub v: String,
+    pub version: String,
 }
 
 #[derive(Debug, Deserialize)]
-pub struct SearchResponse {
-    pub docs: Vec<Doc>,
+#[allow(non_snake_case)]
+pub struct Doc {
+    pub id: String,
+    pub namespace: String,
+    pub name: String,
+    pub latestVersionInfo: LatestVersionInfo,
+    pub version: Option<String>,
 }
 
 #[derive(Debug, Deserialize)]
 pub struct HttpResponse {
-    pub response: SearchResponse,
+    pub components: Vec<Doc>,
 }

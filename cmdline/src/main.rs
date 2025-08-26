@@ -3,12 +3,10 @@ extern crate maven_search_lib;
 mod args;
 
 use dialoguer::{Input, Select, console::Term, theme::ColorfulTheme};
+use log::error;
 use maven_search_lib::format::format;
 use maven_search_lib::http::search;
 use std::error::Error;
-
-#[macro_use]
-extern crate log;
 
 use crate::args::get_args;
 
