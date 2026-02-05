@@ -20,7 +20,7 @@ getargs = "0.5.0"
 log = "0.4.29"
 serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
-ureq = { version = "3.1.4", features = ["json"] }
+ureq = { version = "3.2.0", features = ["json"] }
 update-informer = "1.1.0"
 
 [[bin]]
