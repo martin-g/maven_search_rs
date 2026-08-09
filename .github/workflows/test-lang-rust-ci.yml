@@ -52,7 +52,7 @@ jobs:
           rustup toolchain install ${{ matrix.rust }}
           rustup default ${{ matrix.rust }}
           rustup component add rustfmt
-      - uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 #2.9.1
+      - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 #2.9.2
 
       - name: Rust Build
         run: cargo build --all-features
@@ -74,7 +74,7 @@ jobs:
           rustup toolchain install stable
           rustup default stable
           rustup component add clippy
-      - uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 #2.9.1
+      - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 #2.9.2
       - run: cargo clippy --all-features --all-targets -- -Dclippy::all -Dunused_imports
 
   fmt_check:
@@ -90,7 +90,7 @@ jobs:
           rustup toolchain install stable
           rustup default stable
           rustup component add rustfmt
-      - uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 #2.9.1
+      - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 #2.9.2
 
       - name: Rust Format
         run: cargo fmt --all -- --check
